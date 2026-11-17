@@ -1,0 +1,33 @@
+=== W05 run 1 ===
+Update on wallet_transactions  (cost=0.00..3534.86 rows=0 width=0) (actual time=5.706..5.706 rows=0.00 loops=1)
+  Buffers: shared hit=1911 dirtied=1
+  ->  Seq Scan on wallet_transactions  (cost=0.00..3534.86 rows=9 width=38) (actual time=5.213..5.340 rows=100.00 loops=1)
+        Filter: ((txn_type = 'WITHDRAWAL'::text) AND (status = 'PENDING'::text) AND (created_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '24:00:00'::interval)))
+        Rows Removed by Filter: 118243
+        Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=69
+Planning Time: 0.168 ms
+Execution Time: 5.748 ms
+=== W05 run 2 ===
+Update on wallet_transactions  (cost=0.00..3534.86 rows=0 width=0) (actual time=5.871..5.871 rows=0.00 loops=1)
+  Buffers: shared hit=1968 dirtied=1
+  ->  Seq Scan on wallet_transactions  (cost=0.00..3534.86 rows=9 width=38) (actual time=5.406..5.541 rows=100.00 loops=1)
+        Filter: ((txn_type = 'WITHDRAWAL'::text) AND (status = 'PENDING'::text) AND (created_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '24:00:00'::interval)))
+        Rows Removed by Filter: 118243
+        Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=69
+Planning Time: 0.177 ms
+Execution Time: 5.909 ms
+=== W05 run 3 ===
+Update on wallet_transactions  (cost=0.00..3534.86 rows=0 width=0) (actual time=5.402..5.402 rows=0.00 loops=1)
+  Buffers: shared hit=1958 dirtied=1
+  ->  Seq Scan on wallet_transactions  (cost=0.00..3534.86 rows=9 width=38) (actual time=4.941..5.077 rows=100.00 loops=1)
+        Filter: ((txn_type = 'WITHDRAWAL'::text) AND (status = 'PENDING'::text) AND (created_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '24:00:00'::interval)))
+        Rows Removed by Filter: 118243
+        Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=69
+Planning Time: 0.177 ms
+Execution Time: 5.443 ms

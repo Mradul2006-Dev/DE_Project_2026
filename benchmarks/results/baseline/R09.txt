@@ -1,0 +1,51 @@
+=== R09 run 1 ===
+WindowAgg  (cost=2943.20..2943.25 rows=3 width=61) (actual time=4.878..4.882 rows=8.00 loops=1)
+  Window: w1 AS (ORDER BY created_at, txn_id)
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=1174
+  ->  Sort  (cost=2943.17..2943.18 rows=3 width=29) (actual time=4.863..4.864 rows=8.00 loops=1)
+        Sort Key: created_at, txn_id
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=1174
+        ->  Seq Scan on wallet_transactions  (cost=0.00..2943.14 rows=3 width=29) (actual time=0.342..4.855 rows=8.00 loops=1)
+              Filter: ((user_id = 1006) AND (status = 'SUCCESS'::text))
+              Rows Removed by Filter: 118335
+              Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=110
+Planning Time: 0.207 ms
+Execution Time: 4.904 ms
+=== R09 run 2 ===
+WindowAgg  (cost=2943.20..2943.25 rows=3 width=61) (actual time=4.739..4.745 rows=8.00 loops=1)
+  Window: w1 AS (ORDER BY created_at, txn_id)
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=1174
+  ->  Sort  (cost=2943.17..2943.18 rows=3 width=29) (actual time=4.705..4.706 rows=8.00 loops=1)
+        Sort Key: created_at, txn_id
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=1174
+        ->  Seq Scan on wallet_transactions  (cost=0.00..2943.14 rows=3 width=29) (actual time=0.357..4.696 rows=8.00 loops=1)
+              Filter: ((user_id = 1006) AND (status = 'SUCCESS'::text))
+              Rows Removed by Filter: 118335
+              Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=110
+Planning Time: 0.203 ms
+Execution Time: 4.770 ms
+=== R09 run 3 ===
+WindowAgg  (cost=2943.20..2943.25 rows=3 width=61) (actual time=4.519..4.523 rows=8.00 loops=1)
+  Window: w1 AS (ORDER BY created_at, txn_id)
+  Storage: Memory  Maximum Storage: 17kB
+  Buffers: shared hit=1174
+  ->  Sort  (cost=2943.17..2943.18 rows=3 width=29) (actual time=4.506..4.506 rows=8.00 loops=1)
+        Sort Key: created_at, txn_id
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=1174
+        ->  Seq Scan on wallet_transactions  (cost=0.00..2943.14 rows=3 width=29) (actual time=0.342..4.498 rows=8.00 loops=1)
+              Filter: ((user_id = 1006) AND (status = 'SUCCESS'::text))
+              Rows Removed by Filter: 118335
+              Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=110
+Planning Time: 0.190 ms
+Execution Time: 4.547 ms

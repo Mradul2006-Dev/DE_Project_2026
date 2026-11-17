@@ -1,0 +1,87 @@
+=== R18 run 1 ===
+Sort  (cost=4523.50..4526.05 rows=1018 width=65) (actual time=11.849..11.865 rows=752.00 loops=1)
+  Sort Key: (sum(w.amount)) DESC
+  Sort Method: quicksort  Memory: 68kB
+  Buffers: shared hit=1827
+  ->  HashAggregate  (cost=4426.84..4472.65 rows=1018 width=65) (actual time=11.436..11.717 rows=752.00 loops=1)
+        Group Key: u.username
+        Filter: (sum(w.amount) > '1000'::numeric)
+        Batches: 1  Memory Usage: 1105kB
+        Rows Removed by Filter: 1230
+        Buffers: shared hit=1824
+        ->  Hash Join  (cost=1436.12..4411.57 rows=3054 width=38) (actual time=4.307..10.816 rows=3031.00 loops=1)
+              Hash Cond: (w.user_id = u.user_id)
+              Buffers: shared hit=1824
+              ->  Seq Scan on wallet_transactions w  (cost=0.00..2943.14 rows=12303 width=13) (actual time=0.443..5.785 rows=12302.00 loops=1)
+                    Filter: ((txn_type = 'WINNINGS'::text) AND (status = 'SUCCESS'::text))
+                    Rows Removed by Filter: 106041
+                    Buffers: shared hit=1168
+              ->  Hash  (cost=1281.00..1281.00 rows=12410 width=33) (actual time=3.848..3.849 rows=12442.00 loops=1)
+                    Buckets: 16384  Batches: 1  Memory Usage: 926kB
+                    Buffers: shared hit=656
+                    ->  Seq Scan on users u  (cost=0.00..1281.00 rows=12410 width=33) (actual time=0.003..2.993 rows=12442.00 loops=1)
+                          Filter: (kyc_status <> 'VERIFIED'::text)
+                          Rows Removed by Filter: 37558
+                          Buffers: shared hit=656
+Planning:
+  Buffers: shared hit=216
+Planning Time: 0.430 ms
+Execution Time: 11.923 ms
+=== R18 run 2 ===
+Sort  (cost=4523.50..4526.05 rows=1018 width=65) (actual time=12.496..12.514 rows=752.00 loops=1)
+  Sort Key: (sum(w.amount)) DESC
+  Sort Method: quicksort  Memory: 68kB
+  Buffers: shared hit=1827
+  ->  HashAggregate  (cost=4426.84..4472.65 rows=1018 width=65) (actual time=12.075..12.358 rows=752.00 loops=1)
+        Group Key: u.username
+        Filter: (sum(w.amount) > '1000'::numeric)
+        Batches: 1  Memory Usage: 1105kB
+        Rows Removed by Filter: 1230
+        Buffers: shared hit=1824
+        ->  Hash Join  (cost=1436.12..4411.57 rows=3054 width=38) (actual time=3.943..11.485 rows=3031.00 loops=1)
+              Hash Cond: (w.user_id = u.user_id)
+              Buffers: shared hit=1824
+              ->  Seq Scan on wallet_transactions w  (cost=0.00..2943.14 rows=12303 width=13) (actual time=0.404..6.637 rows=12302.00 loops=1)
+                    Filter: ((txn_type = 'WINNINGS'::text) AND (status = 'SUCCESS'::text))
+                    Rows Removed by Filter: 106041
+                    Buffers: shared hit=1168
+              ->  Hash  (cost=1281.00..1281.00 rows=12410 width=33) (actual time=3.524..3.524 rows=12442.00 loops=1)
+                    Buckets: 16384  Batches: 1  Memory Usage: 926kB
+                    Buffers: shared hit=656
+                    ->  Seq Scan on users u  (cost=0.00..1281.00 rows=12410 width=33) (actual time=0.004..2.711 rows=12442.00 loops=1)
+                          Filter: (kyc_status <> 'VERIFIED'::text)
+                          Rows Removed by Filter: 37558
+                          Buffers: shared hit=656
+Planning:
+  Buffers: shared hit=216
+Planning Time: 0.427 ms
+Execution Time: 12.575 ms
+=== R18 run 3 ===
+Sort  (cost=4523.50..4526.05 rows=1018 width=65) (actual time=10.896..10.910 rows=752.00 loops=1)
+  Sort Key: (sum(w.amount)) DESC
+  Sort Method: quicksort  Memory: 68kB
+  Buffers: shared hit=1827
+  ->  HashAggregate  (cost=4426.84..4472.65 rows=1018 width=65) (actual time=10.524..10.774 rows=752.00 loops=1)
+        Group Key: u.username
+        Filter: (sum(w.amount) > '1000'::numeric)
+        Batches: 1  Memory Usage: 1105kB
+        Rows Removed by Filter: 1230
+        Buffers: shared hit=1824
+        ->  Hash Join  (cost=1436.12..4411.57 rows=3054 width=38) (actual time=3.909..10.003 rows=3031.00 loops=1)
+              Hash Cond: (w.user_id = u.user_id)
+              Buffers: shared hit=1824
+              ->  Seq Scan on wallet_transactions w  (cost=0.00..2943.14 rows=12303 width=13) (actual time=0.410..5.462 rows=12302.00 loops=1)
+                    Filter: ((txn_type = 'WINNINGS'::text) AND (status = 'SUCCESS'::text))
+                    Rows Removed by Filter: 106041
+                    Buffers: shared hit=1168
+              ->  Hash  (cost=1281.00..1281.00 rows=12410 width=33) (actual time=3.485..3.485 rows=12442.00 loops=1)
+                    Buckets: 16384  Batches: 1  Memory Usage: 926kB
+                    Buffers: shared hit=656
+                    ->  Seq Scan on users u  (cost=0.00..1281.00 rows=12410 width=33) (actual time=0.004..2.729 rows=12442.00 loops=1)
+                          Filter: (kyc_status <> 'VERIFIED'::text)
+                          Rows Removed by Filter: 37558
+                          Buffers: shared hit=656
+Planning:
+  Buffers: shared hit=216
+Planning Time: 0.431 ms
+Execution Time: 10.962 ms
