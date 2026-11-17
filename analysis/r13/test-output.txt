@@ -1,0 +1,22 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 5
+INSERT 0 5
+        test        |  ids   
+--------------------+--------
+ original_with_null | (none)
+(1 row)
+
+         test          |  ids   
+-----------------------+--------
+ original_without_null | (none)
+(1 row)
+
+            test            |  ids  
+----------------------------+-------
+ corrected_successful_debit | 2,3,4
+(1 row)
+
+DO

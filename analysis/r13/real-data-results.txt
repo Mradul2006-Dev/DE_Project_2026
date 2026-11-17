@@ -1,0 +1,45 @@
+SET
+ null_references 
+-----------------
+           63000
+(1 row)
+
+ original_count 
+----------------
+              0
+(1 row)
+
+ missing_successful_entry_fee 
+------------------------------
+                          192
+(1 row)
+
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=1469.38..4807.66 rows=22597 width=24) (actual time=11.447..11.901 rows=192.00 loops=1)
+   Hash Cond: (ce.contest_id = c.contest_id)
+   Buffers: shared hit=1612
+   ->  Hash Right Anti Join  (cost=1353.79..4632.64 rows=22597 width=24) (actual time=11.176..11.601 rows=192.00 loops=1)
+         Hash Cond: (w.reference_entry_id = ce.entry_id)
+         Buffers: shared hit=1560
+         ->  Seq Scan on wallet_transactions w  (cost=0.00..2943.14 rows=42662 width=8) (actual time=0.384..5.836 rows=42554.00 loops=1)
+               Filter: ((txn_type = 'ENTRY_FEE'::text) AND (status = 'SUCCESS'::text))
+               Rows Removed by Filter: 75789
+               Buffers: shared hit=1168
+         ->  Hash  (cost=819.46..819.46 rows=42746 width=24) (actual time=3.118..3.118 rows=42746.00 loops=1)
+               Buckets: 65536  Batches: 1  Memory Usage: 2850kB
+               Buffers: shared hit=392
+               ->  Seq Scan on contest_entries ce  (cost=0.00..819.46 rows=42746 width=24) (actual time=0.002..1.579 rows=42746.00 loops=1)
+                     Buffers: shared hit=392
+   ->  Hash  (cost=83.80..83.80 rows=2544 width=8) (actual time=0.267..0.267 rows=2544.00 loops=1)
+         Buckets: 4096  Batches: 1  Memory Usage: 132kB
+         Buffers: shared hit=52
+         ->  Seq Scan on contests c  (cost=0.00..83.80 rows=2544 width=8) (actual time=0.004..0.181 rows=2544.00 loops=1)
+               Filter: (entry_fee > '0'::numeric)
+               Buffers: shared hit=52
+ Planning:
+   Buffers: shared hit=21
+ Planning Time: 0.143 ms
+ Execution Time: 11.921 ms
+(25 rows)
+
