@@ -1,0 +1,144 @@
+=== R24 run 1 ===
+Sort  (cost=183.56..184.17 rows=247 width=25) (actual time=0.496..0.499 rows=115.00 loops=1)
+  Sort Key: x.full_name, x.starts_at DESC
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: shared hit=90
+  ->  Subquery Scan on x  (cost=166.33..173.74 rows=247 width=25) (actual time=0.441..0.474 rows=115.00 loops=1)
+        Buffers: shared hit=84
+        ->  WindowAgg  (cost=166.33..171.27 rows=247 width=41) (actual time=0.441..0.469 rows=115.00 loops=1)
+              Window: w1 AS (PARTITION BY p.player_id ORDER BY m.starts_at ROWS UNBOUNDED PRECEDING)
+              Run Condition: (row_number() OVER w1 <= 5)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=84
+              ->  Sort  (cost=166.33..166.95 rows=247 width=33) (actual time=0.439..0.447 rows=341.00 loops=1)
+                    Sort Key: p.player_id, m.starts_at DESC
+                    Sort Method: quicksort  Memory: 42kB
+                    Buffers: shared hit=84
+                    ->  Hash Join  (cost=20.28..156.51 rows=247 width=33) (actual time=0.075..0.394 rows=341.00 loops=1)
+                          Hash Cond: (s.match_id = m.match_id)
+                          Buffers: shared hit=81
+                          ->  Hash Join  (cost=12.51..148.08 rows=247 width=33) (actual time=0.046..0.344 rows=341.00 loops=1)
+                                Hash Cond: (s.player_id = p.player_id)
+                                Buffers: shared hit=78
+                                ->  Seq Scan on player_match_stats s  (cost=0.00..116.44 rows=4444 width=21) (actual time=0.002..0.172 rows=4444.00 loops=1)
+                                      Buffers: shared hit=72
+                                ->  Hash  (cost=12.20..12.20 rows=25 width=20) (actual time=0.040..0.040 rows=25.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                      Buffers: shared hit=6
+                                      ->  Hash Join  (cost=1.24..12.20 rows=25 width=20) (actual time=0.008..0.038 rows=25.00 loops=1)
+                                            Hash Cond: (p.team_id = t.team_id)
+                                            Buffers: shared hit=6
+                                            ->  Seq Scan on players p  (cost=0.00..9.50 rows=450 width=28) (actual time=0.001..0.013 rows=450.00 loops=1)
+                                                  Buffers: shared hit=5
+                                            ->  Hash  (cost=1.23..1.23 rows=1 width=8) (actual time=0.004..0.004 rows=1.00 loops=1)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                  Buffers: shared hit=1
+                                                  ->  Seq Scan on teams t  (cost=0.00..1.23 rows=1 width=8) (actual time=0.002..0.002 rows=1.00 loops=1)
+                                                        Filter: (short_name = 'CSK'::text)
+                                                        Rows Removed by Filter: 17
+                                                        Buffers: shared hit=1
+                          ->  Hash  (cost=5.12..5.12 rows=212 width=16) (actual time=0.025..0.025 rows=212.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 18kB
+                                Buffers: shared hit=3
+                                ->  Seq Scan on matches m  (cost=0.00..5.12 rows=212 width=16) (actual time=0.003..0.015 rows=212.00 loops=1)
+                                      Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=261
+Planning Time: 0.586 ms
+Execution Time: 0.543 ms
+=== R24 run 2 ===
+Sort  (cost=183.56..184.17 rows=247 width=25) (actual time=0.493..0.497 rows=115.00 loops=1)
+  Sort Key: x.full_name, x.starts_at DESC
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: shared hit=90
+  ->  Subquery Scan on x  (cost=166.33..173.74 rows=247 width=25) (actual time=0.434..0.468 rows=115.00 loops=1)
+        Buffers: shared hit=84
+        ->  WindowAgg  (cost=166.33..171.27 rows=247 width=41) (actual time=0.433..0.463 rows=115.00 loops=1)
+              Window: w1 AS (PARTITION BY p.player_id ORDER BY m.starts_at ROWS UNBOUNDED PRECEDING)
+              Run Condition: (row_number() OVER w1 <= 5)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=84
+              ->  Sort  (cost=166.33..166.95 rows=247 width=33) (actual time=0.431..0.437 rows=341.00 loops=1)
+                    Sort Key: p.player_id, m.starts_at DESC
+                    Sort Method: quicksort  Memory: 42kB
+                    Buffers: shared hit=84
+                    ->  Hash Join  (cost=20.28..156.51 rows=247 width=33) (actual time=0.077..0.385 rows=341.00 loops=1)
+                          Hash Cond: (s.match_id = m.match_id)
+                          Buffers: shared hit=81
+                          ->  Hash Join  (cost=12.51..148.08 rows=247 width=33) (actual time=0.049..0.335 rows=341.00 loops=1)
+                                Hash Cond: (s.player_id = p.player_id)
+                                Buffers: shared hit=78
+                                ->  Seq Scan on player_match_stats s  (cost=0.00..116.44 rows=4444 width=21) (actual time=0.002..0.154 rows=4444.00 loops=1)
+                                      Buffers: shared hit=72
+                                ->  Hash  (cost=12.20..12.20 rows=25 width=20) (actual time=0.043..0.044 rows=25.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                      Buffers: shared hit=6
+                                      ->  Hash Join  (cost=1.24..12.20 rows=25 width=20) (actual time=0.008..0.041 rows=25.00 loops=1)
+                                            Hash Cond: (p.team_id = t.team_id)
+                                            Buffers: shared hit=6
+                                            ->  Seq Scan on players p  (cost=0.00..9.50 rows=450 width=28) (actual time=0.001..0.014 rows=450.00 loops=1)
+                                                  Buffers: shared hit=5
+                                            ->  Hash  (cost=1.23..1.23 rows=1 width=8) (actual time=0.004..0.004 rows=1.00 loops=1)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                  Buffers: shared hit=1
+                                                  ->  Seq Scan on teams t  (cost=0.00..1.23 rows=1 width=8) (actual time=0.001..0.002 rows=1.00 loops=1)
+                                                        Filter: (short_name = 'CSK'::text)
+                                                        Rows Removed by Filter: 17
+                                                        Buffers: shared hit=1
+                          ->  Hash  (cost=5.12..5.12 rows=212 width=16) (actual time=0.025..0.025 rows=212.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 18kB
+                                Buffers: shared hit=3
+                                ->  Seq Scan on matches m  (cost=0.00..5.12 rows=212 width=16) (actual time=0.003..0.015 rows=212.00 loops=1)
+                                      Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=261
+Planning Time: 0.536 ms
+Execution Time: 0.542 ms
+=== R24 run 3 ===
+Sort  (cost=183.56..184.17 rows=247 width=25) (actual time=0.488..0.491 rows=115.00 loops=1)
+  Sort Key: x.full_name, x.starts_at DESC
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: shared hit=90
+  ->  Subquery Scan on x  (cost=166.33..173.74 rows=247 width=25) (actual time=0.433..0.465 rows=115.00 loops=1)
+        Buffers: shared hit=84
+        ->  WindowAgg  (cost=166.33..171.27 rows=247 width=41) (actual time=0.432..0.461 rows=115.00 loops=1)
+              Window: w1 AS (PARTITION BY p.player_id ORDER BY m.starts_at ROWS UNBOUNDED PRECEDING)
+              Run Condition: (row_number() OVER w1 <= 5)
+              Storage: Memory  Maximum Storage: 17kB
+              Buffers: shared hit=84
+              ->  Sort  (cost=166.33..166.95 rows=247 width=33) (actual time=0.430..0.436 rows=341.00 loops=1)
+                    Sort Key: p.player_id, m.starts_at DESC
+                    Sort Method: quicksort  Memory: 42kB
+                    Buffers: shared hit=84
+                    ->  Hash Join  (cost=20.28..156.51 rows=247 width=33) (actual time=0.078..0.384 rows=341.00 loops=1)
+                          Hash Cond: (s.match_id = m.match_id)
+                          Buffers: shared hit=81
+                          ->  Hash Join  (cost=12.51..148.08 rows=247 width=33) (actual time=0.049..0.332 rows=341.00 loops=1)
+                                Hash Cond: (s.player_id = p.player_id)
+                                Buffers: shared hit=78
+                                ->  Seq Scan on player_match_stats s  (cost=0.00..116.44 rows=4444 width=21) (actual time=0.003..0.154 rows=4444.00 loops=1)
+                                      Buffers: shared hit=72
+                                ->  Hash  (cost=12.20..12.20 rows=25 width=20) (actual time=0.043..0.043 rows=25.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                      Buffers: shared hit=6
+                                      ->  Hash Join  (cost=1.24..12.20 rows=25 width=20) (actual time=0.009..0.040 rows=25.00 loops=1)
+                                            Hash Cond: (p.team_id = t.team_id)
+                                            Buffers: shared hit=6
+                                            ->  Seq Scan on players p  (cost=0.00..9.50 rows=450 width=28) (actual time=0.001..0.014 rows=450.00 loops=1)
+                                                  Buffers: shared hit=5
+                                            ->  Hash  (cost=1.23..1.23 rows=1 width=8) (actual time=0.004..0.004 rows=1.00 loops=1)
+                                                  Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                  Buffers: shared hit=1
+                                                  ->  Seq Scan on teams t  (cost=0.00..1.23 rows=1 width=8) (actual time=0.002..0.003 rows=1.00 loops=1)
+                                                        Filter: (short_name = 'CSK'::text)
+                                                        Rows Removed by Filter: 17
+                                                        Buffers: shared hit=1
+                          ->  Hash  (cost=5.12..5.12 rows=212 width=16) (actual time=0.026..0.026 rows=212.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 18kB
+                                Buffers: shared hit=3
+                                ->  Seq Scan on matches m  (cost=0.00..5.12 rows=212 width=16) (actual time=0.004..0.017 rows=212.00 loops=1)
+                                      Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=261
+Planning Time: 0.524 ms
+Execution Time: 0.536 ms

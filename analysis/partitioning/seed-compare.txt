@@ -1,0 +1,6 @@
+Original and partition copy (count, total amount, minimum txn_id, maximum txn_id)
+118343|67317651.58|1|118343
+118343|67317651.58|1|118343
+June UTC successful-deposit aggregate (count, total amount)
+2068|1612400.00
+2068|1612400.00

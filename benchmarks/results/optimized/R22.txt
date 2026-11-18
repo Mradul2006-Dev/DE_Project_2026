@@ -1,0 +1,33 @@
+=== R22 run 1 ===
+Limit  (cost=2908.13..2909.58 rows=25 width=44) (actual time=5.761..5.768 rows=25.00 loops=1)
+  Buffers: shared hit=1089
+  ->  Index Only Scan using wallet_history_time_idx on wallet_transactions  (cost=0.42..6882.56 rows=118343 width=44) (actual time=0.029..4.885 rows=50025.00 loops=1)
+        Heap Fetches: 50025
+        Index Searches: 1
+        Buffers: shared hit=1089
+Planning:
+  Buffers: shared hit=227
+Planning Time: 0.473 ms
+Execution Time: 5.806 ms
+=== R22 run 2 ===
+Limit  (cost=2908.13..2909.58 rows=25 width=44) (actual time=6.544..6.549 rows=25.00 loops=1)
+  Buffers: shared hit=1089
+  ->  Index Only Scan using wallet_history_time_idx on wallet_transactions  (cost=0.42..6882.56 rows=118343 width=44) (actual time=0.013..5.452 rows=50025.00 loops=1)
+        Heap Fetches: 50025
+        Index Searches: 1
+        Buffers: shared hit=1089
+Planning:
+  Buffers: shared hit=227
+Planning Time: 0.837 ms
+Execution Time: 6.564 ms
+=== R22 run 3 ===
+Limit  (cost=2908.13..2909.58 rows=25 width=44) (actual time=5.445..5.450 rows=25.00 loops=1)
+  Buffers: shared hit=1089
+  ->  Index Only Scan using wallet_history_time_idx on wallet_transactions  (cost=0.42..6882.56 rows=118343 width=44) (actual time=0.011..4.570 rows=50025.00 loops=1)
+        Heap Fetches: 50025
+        Index Searches: 1
+        Buffers: shared hit=1089
+Planning:
+  Buffers: shared hit=227
+Planning Time: 0.373 ms
+Execution Time: 5.463 ms

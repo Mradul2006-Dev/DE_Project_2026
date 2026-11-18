@@ -38,14 +38,43 @@ From the project directory, with PostgreSQL running:
 
 ```sh
 unzip -n seed_data.zip
-createdb dream11_t0120
-psql -X -v ON_ERROR_STOP=1 -d dream11_t0120 -f sql/01_schema.sql -f sql/02_load_data.sql
-./benchmarks/run_benchmark.sh dream11_t0120 baseline 3
+createdb dream11_seed
+psql -X -v ON_ERROR_STOP=1 -d dream11_seed -f sql/01_schema.sql -f sql/02_load_data.sql
+./benchmarks/run_benchmark.sh dream11_seed baseline 3
 ```
 
 The [baseline timings](docs/03_baseline_timings.md) use all ten seed tables and three runs per query.
 
 ---
+
+### Run CP3 on the seed data
+
+Start with a freshly loaded seed database named dream11_seed using the commands above. Create a second copy for the indexes and compare the two workloads.
+
+```bash
+createdb -T dream11_seed dream11_optimized
+psql -X -v ON_ERROR_STOP=1 -d dream11_optimized -f sql/05_indexes.sql
+bash benchmarks/verify_workload.sh dream11_seed dream11_optimized
+bash benchmarks/run_benchmark.sh dream11_optimized optimized 3 sql/06_optimized_queries.sql
+```
+
+The [optimization report](docs/04_optimization_report.md) links the recorded paired baseline and optimized plans, including R13's corrected results.
+
+### Run CP4 on the faculty archive
+
+Save the faculty ZIP locally. On Mac or Git Bash, run from this repo with PostgreSQL running and unzip, createdb and psql available.
+
+```bash
+bash benchmarks/run_large.sh "$HOME/Downloads/large_data.zip"
+```
+
+The command loads a temporary database, runs the optimized workload three times, saves the size and partition evidence, and fills [the scalability report](docs/05_scalability_report.md). Review target misses with the raw plans before committing. The [partitioning DDL](sql/08_partitioning.sql) uses a test copy of the wallet.
+
+Practice the same flow on the seed ZIP with the rehearsal option. The command prints the scratch results path.
+
+```bash
+bash benchmarks/run_large.sh seed_data.zip --rehearsal
+```
 
 ## How this project works
 

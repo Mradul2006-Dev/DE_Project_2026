@@ -1,0 +1,156 @@
+=== W04 run 1 ===
+Update on user_teams ut  (cost=5702.78..6138.30 rows=0 width=0) (actual time=4.451..4.453 rows=0.00 loops=1)
+  Buffers: shared hit=5526 dirtied=7 written=1
+  ->  Hash Join  (cost=5702.78..6138.30 rows=2 width=86) (actual time=2.309..2.422 rows=278.00 loops=1)
+        Hash Cond: (ut.user_team_id = s.user_team_id)
+        Buffers: shared hit=1576
+        ->  Bitmap Heap Scan on user_teams ut  (cost=10.48..445.26 rows=282 width=14) (actual time=0.051..0.119 rows=278.00 loops=1)
+              Recheck Cond: (match_id = 183)
+              Heap Blocks: exact=217
+              Buffers: shared hit=226
+              ->  Bitmap Index Scan on user_teams_match_idx  (cost=0.00..10.40 rows=282 width=0) (actual time=0.040..0.040 rows=925.00 loops=1)
+                    Index Cond: (match_id = 183)
+                    Index Searches: 1
+                    Buffers: shared hit=9
+        ->  Hash  (cost=5688.78..5688.78 rows=282 width=104) (actual time=2.253..2.254 rows=278.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 31kB
+              Buffers: shared hit=1350
+              ->  Subquery Scan on s  (cost=5682.43..5688.78 rows=282 width=104) (actual time=2.196..2.237 rows=278.00 loops=1)
+                    Buffers: shared hit=1350
+                    ->  HashAggregate  (cost=5682.43..5685.96 rows=282 width=40) (actual time=2.188..2.212 rows=278.00 loops=1)
+                          Group Key: ut2.user_team_id
+                          Batches: 1  Memory Usage: 176kB
+                          Buffers: shared hit=1350
+                          ->  Hash Left Join  (cost=53.09..5643.64 rows=3103 width=37) (actual time=0.067..1.843 rows=3062.00 loops=1)
+                                Hash Cond: (utp.player_id = pms.player_id)
+                                Buffers: shared hit=1350
+                                ->  Nested Loop  (cost=10.90..5593.21 rows=3103 width=40) (actual time=0.031..1.579 rows=3062.00 loops=1)
+                                      Buffers: shared hit=1347
+                                      ->  Bitmap Heap Scan on user_teams ut2  (cost=10.48..445.26 rows=282 width=32) (actual time=0.025..0.267 rows=278.00 loops=1)
+                                            Recheck Cond: (match_id = 183)
+                                            Heap Blocks: exact=217
+                                            Buffers: shared hit=223
+                                            ->  Bitmap Index Scan on user_teams_match_idx  (cost=0.00..10.40 rows=282 width=0) (actual time=0.018..0.018 rows=925.00 loops=1)
+                                                  Index Cond: (match_id = 183)
+                                                  Index Searches: 1
+                                                  Buffers: shared hit=6
+                                      ->  Index Only Scan using user_team_players_pkey on user_team_players utp  (cost=0.42..18.15 rows=11 width=16) (actual time=0.004..0.004 rows=11.01 loops=278)
+                                            Index Cond: (user_team_id = ut2.user_team_id)
+                                            Heap Fetches: 3062
+                                            Index Searches: 278
+                                            Buffers: shared hit=1124
+                                ->  Hash  (cost=41.92..41.92 rows=22 width=21) (actual time=0.032..0.033 rows=22.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                      Buffers: shared hit=3
+                                      ->  Index Scan using player_match_stats_pkey on player_match_stats pms  (cost=0.28..41.92 rows=22 width=21) (actual time=0.028..0.029 rows=22.00 loops=1)
+                                            Index Cond: (match_id = 183)
+                                            Index Searches: 1
+                                            Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=303
+Planning Time: 0.586 ms
+Execution Time: 4.565 ms
+=== W04 run 2 ===
+Update on user_teams ut  (cost=5702.78..6138.30 rows=0 width=0) (actual time=3.884..3.886 rows=0.00 loops=1)
+  Buffers: shared hit=5532 dirtied=4
+  ->  Hash Join  (cost=5702.78..6138.30 rows=2 width=86) (actual time=2.063..2.229 rows=278.00 loops=1)
+        Hash Cond: (ut.user_team_id = s.user_team_id)
+        Buffers: shared hit=1580
+        ->  Bitmap Heap Scan on user_teams ut  (cost=10.48..445.26 rows=282 width=14) (actual time=0.043..0.160 rows=278.00 loops=1)
+              Recheck Cond: (match_id = 183)
+              Heap Blocks: exact=218
+              Buffers: shared hit=228
+              ->  Bitmap Index Scan on user_teams_match_idx  (cost=0.00..10.40 rows=282 width=0) (actual time=0.031..0.031 rows=928.00 loops=1)
+                    Index Cond: (match_id = 183)
+                    Index Searches: 1
+                    Buffers: shared hit=10
+        ->  Hash  (cost=5688.78..5688.78 rows=282 width=104) (actual time=2.016..2.017 rows=278.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 31kB
+              Buffers: shared hit=1352
+              ->  Subquery Scan on s  (cost=5682.43..5688.78 rows=282 width=104) (actual time=1.960..2.002 rows=278.00 loops=1)
+                    Buffers: shared hit=1352
+                    ->  HashAggregate  (cost=5682.43..5685.96 rows=282 width=40) (actual time=1.953..1.977 rows=278.00 loops=1)
+                          Group Key: ut2.user_team_id
+                          Batches: 1  Memory Usage: 176kB
+                          Buffers: shared hit=1352
+                          ->  Hash Left Join  (cost=53.09..5643.64 rows=3103 width=37) (actual time=0.044..1.629 rows=3062.00 loops=1)
+                                Hash Cond: (utp.player_id = pms.player_id)
+                                Buffers: shared hit=1352
+                                ->  Nested Loop  (cost=10.90..5593.21 rows=3103 width=40) (actual time=0.029..1.415 rows=3062.00 loops=1)
+                                      Buffers: shared hit=1349
+                                      ->  Bitmap Heap Scan on user_teams ut2  (cost=10.48..445.26 rows=282 width=32) (actual time=0.024..0.389 rows=278.00 loops=1)
+                                            Recheck Cond: (match_id = 183)
+                                            Heap Blocks: exact=218
+                                            Buffers: shared hit=225
+                                            ->  Bitmap Index Scan on user_teams_match_idx  (cost=0.00..10.40 rows=282 width=0) (actual time=0.017..0.017 rows=928.00 loops=1)
+                                                  Index Cond: (match_id = 183)
+                                                  Index Searches: 1
+                                                  Buffers: shared hit=7
+                                      ->  Index Only Scan using user_team_players_pkey on user_team_players utp  (cost=0.42..18.15 rows=11 width=16) (actual time=0.003..0.003 rows=11.01 loops=278)
+                                            Index Cond: (user_team_id = ut2.user_team_id)
+                                            Heap Fetches: 3062
+                                            Index Searches: 278
+                                            Buffers: shared hit=1124
+                                ->  Hash  (cost=41.92..41.92 rows=22 width=21) (actual time=0.011..0.012 rows=22.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                      Buffers: shared hit=3
+                                      ->  Index Scan using player_match_stats_pkey on player_match_stats pms  (cost=0.28..41.92 rows=22 width=21) (actual time=0.007..0.009 rows=22.00 loops=1)
+                                            Index Cond: (match_id = 183)
+                                            Index Searches: 1
+                                            Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=303
+Planning Time: 0.540 ms
+Execution Time: 3.967 ms
+=== W04 run 3 ===
+Update on user_teams ut  (cost=5702.78..6138.30 rows=0 width=0) (actual time=3.777..3.778 rows=0.00 loops=1)
+  Buffers: shared hit=5543 dirtied=6 written=1
+  ->  Hash Join  (cost=5702.78..6138.30 rows=2 width=86) (actual time=2.096..2.217 rows=278.00 loops=1)
+        Hash Cond: (ut.user_team_id = s.user_team_id)
+        Buffers: shared hit=1584
+        ->  Bitmap Heap Scan on user_teams ut  (cost=10.48..445.26 rows=282 width=14) (actual time=0.046..0.125 rows=278.00 loops=1)
+              Recheck Cond: (match_id = 183)
+              Heap Blocks: exact=220
+              Buffers: shared hit=230
+              ->  Bitmap Index Scan on user_teams_match_idx  (cost=0.00..10.40 rows=282 width=0) (actual time=0.034..0.034 rows=1017.00 loops=1)
+                    Index Cond: (match_id = 183)
+                    Index Searches: 1
+                    Buffers: shared hit=10
+        ->  Hash  (cost=5688.78..5688.78 rows=282 width=104) (actual time=2.045..2.046 rows=278.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 31kB
+              Buffers: shared hit=1354
+              ->  Subquery Scan on s  (cost=5682.43..5688.78 rows=282 width=104) (actual time=1.986..2.030 rows=278.00 loops=1)
+                    Buffers: shared hit=1354
+                    ->  HashAggregate  (cost=5682.43..5685.96 rows=282 width=40) (actual time=1.978..2.003 rows=278.00 loops=1)
+                          Group Key: ut2.user_team_id
+                          Batches: 1  Memory Usage: 176kB
+                          Buffers: shared hit=1354
+                          ->  Hash Left Join  (cost=53.09..5643.64 rows=3103 width=37) (actual time=0.047..1.653 rows=3062.00 loops=1)
+                                Hash Cond: (utp.player_id = pms.player_id)
+                                Buffers: shared hit=1354
+                                ->  Nested Loop  (cost=10.90..5593.21 rows=3103 width=40) (actual time=0.032..1.435 rows=3062.00 loops=1)
+                                      Buffers: shared hit=1351
+                                      ->  Bitmap Heap Scan on user_teams ut2  (cost=10.48..445.26 rows=282 width=32) (actual time=0.027..0.394 rows=278.00 loops=1)
+                                            Recheck Cond: (match_id = 183)
+                                            Heap Blocks: exact=220
+                                            Buffers: shared hit=227
+                                            ->  Bitmap Index Scan on user_teams_match_idx  (cost=0.00..10.40 rows=282 width=0) (actual time=0.020..0.020 rows=1017.00 loops=1)
+                                                  Index Cond: (match_id = 183)
+                                                  Index Searches: 1
+                                                  Buffers: shared hit=7
+                                      ->  Index Only Scan using user_team_players_pkey on user_team_players utp  (cost=0.42..18.15 rows=11 width=16) (actual time=0.003..0.003 rows=11.01 loops=278)
+                                            Index Cond: (user_team_id = ut2.user_team_id)
+                                            Heap Fetches: 3062
+                                            Index Searches: 278
+                                            Buffers: shared hit=1124
+                                ->  Hash  (cost=41.92..41.92 rows=22 width=21) (actual time=0.012..0.012 rows=22.00 loops=1)
+                                      Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                      Buffers: shared hit=3
+                                      ->  Index Scan using player_match_stats_pkey on player_match_stats pms  (cost=0.28..41.92 rows=22 width=21) (actual time=0.008..0.009 rows=22.00 loops=1)
+                                            Index Cond: (match_id = 183)
+                                            Index Searches: 1
+                                            Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=303
+Planning Time: 0.587 ms
+Execution Time: 3.876 ms

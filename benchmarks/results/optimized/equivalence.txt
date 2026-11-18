@@ -1,0 +1,26 @@
+R01 exact row match: 6 rows
+R02 exact row match: 46 rows
+R03 exact row match: 2 rows
+R04 exact row match: 10 rows
+R05 exact row match: 67 rows
+R06 exact row match: 51 rows
+R07 exact row match: 11 rows
+R08 exact row match: 10 rows
+R09 exact row match: 8 rows
+R10 exact row match: 100 rows
+R11 exact row match: 3160 rows
+R12 exact row match: 20 rows
+R13 corrected: original 0 rows, independent oracle and rewrite 192 rows
+R14 exact row match: 4 rows
+R15 exact row match: 20 rows
+R16 exact row match: 23 rows
+R17 exact row match: 14 rows
+R18 exact row match: 752 rows
+R19 exact row match: 250 rows
+R20 exact row match: 28 rows
+R21 exact row match: 2 rows
+R22 exact row match: 25 rows
+R23 exact row match: 1 rows
+R24 exact row match: 115 rows
+R25 exact row match: 58 rows
+W04 exact updated team and points match: 278 rows (rolled back)

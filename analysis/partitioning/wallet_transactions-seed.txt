@@ -1,0 +1,11 @@
+Aggregate  (cost=118.74..118.75 rows=1 width=40) (actual time=0.301..0.301 rows=1.00 loops=1)
+  Buffers: shared hit=67
+  ->  Index Only Scan using wallet_success_deposit_time_idx on wallet_transactions  (cost=0.29..107.45 rows=2258 width=5) (actual time=0.012..0.211 rows=2068.00 loops=1)
+        Index Cond: ((created_at >= '2026-06-01 05:30:00+05:30'::timestamp with time zone) AND (created_at < '2026-07-01 05:30:00+05:30'::timestamp with time zone))
+        Heap Fetches: 2068
+        Index Searches: 1
+        Buffers: shared hit=67
+Planning:
+  Buffers: shared hit=256
+Planning Time: 0.600 ms
+Execution Time: 0.320 ms

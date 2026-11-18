@@ -1,0 +1,39 @@
+=== R10 run 1 ===
+Sort  (cost=3535.03..3535.05 rows=10 width=29) (actual time=5.584..5.586 rows=100.00 loops=1)
+  Sort Key: created_at
+  Sort Method: quicksort  Memory: 29kB
+  Buffers: shared hit=1171
+  ->  Seq Scan on wallet_transactions  (cost=0.00..3534.86 rows=10 width=29) (actual time=5.426..5.566 rows=100.00 loops=1)
+        Filter: ((txn_type = 'WITHDRAWAL'::text) AND (status = 'PENDING'::text) AND (created_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '24:00:00'::interval)))
+        Rows Removed by Filter: 118243
+        Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=100
+Planning Time: 2.903 ms
+Execution Time: 5.610 ms
+=== R10 run 2 ===
+Sort  (cost=3535.03..3535.05 rows=10 width=29) (actual time=5.985..5.987 rows=100.00 loops=1)
+  Sort Key: created_at
+  Sort Method: quicksort  Memory: 29kB
+  Buffers: shared hit=1171
+  ->  Seq Scan on wallet_transactions  (cost=0.00..3534.86 rows=10 width=29) (actual time=5.815..5.970 rows=100.00 loops=1)
+        Filter: ((txn_type = 'WITHDRAWAL'::text) AND (status = 'PENDING'::text) AND (created_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '24:00:00'::interval)))
+        Rows Removed by Filter: 118243
+        Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=100
+Planning Time: 0.211 ms
+Execution Time: 6.004 ms
+=== R10 run 3 ===
+Sort  (cost=3535.03..3535.05 rows=10 width=29) (actual time=6.401..6.403 rows=100.00 loops=1)
+  Sort Key: created_at
+  Sort Method: quicksort  Memory: 29kB
+  Buffers: shared hit=1171
+  ->  Seq Scan on wallet_transactions  (cost=0.00..3534.86 rows=10 width=29) (actual time=6.237..6.386 rows=100.00 loops=1)
+        Filter: ((txn_type = 'WITHDRAWAL'::text) AND (status = 'PENDING'::text) AND (created_at < ('2026-06-30 23:59:00+05:30'::timestamp with time zone - '24:00:00'::interval)))
+        Rows Removed by Filter: 118243
+        Buffers: shared hit=1168
+Planning:
+  Buffers: shared hit=100
+Planning Time: 0.229 ms
+Execution Time: 6.418 ms
