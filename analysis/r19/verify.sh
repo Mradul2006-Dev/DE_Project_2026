@@ -7,16 +7,20 @@ if [[ $# -ne 1 ]]; then
 fi
 
 root=$(cd -- "$(dirname -- "$0")/../.." && pwd)
-original=$(awk '
-  /^-- @R19[[:space:]]*$/ { found=1; next }
-  found && /^-- @/ { exit }
-  found { print }
-' "$root/queries/workload_30.sql")
-if [[ -z "$original" ]]; then
-  printf '%s\n' 'R19 was not found in queries/workload_30.sql.' >&2
+extract_r19() {
+  awk '
+    /^-- @R19[[:space:]]*$/ { found=1; next }
+    found && /^-- @/ { exit }
+    found { print }
+  ' "$1"
+}
+
+original=$(extract_r19 "$root/queries/workload_30.sql")
+candidate=$(extract_r19 "$root/sql/06_optimized_queries.sql")
+if [[ -z "$original" || -z "$candidate" ]]; then
+  printf '%s\n' 'R19 must exist in both the faculty workload and the submitted optimized workload.' >&2
   exit 1
 fi
-candidate=$(cat "$root/analysis/r19/r19-optimized.sql")
 
 {
   cat <<'SQL'

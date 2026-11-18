@@ -19,10 +19,15 @@ The rewrite was about 107× faster for this query on this fixture.
 
 ## Run locally
 
-Apply the repository schema and loader to a fresh Dream11 test database. From the repo root, pass its name to the verification script.
+Apply the repository schema and seed loader to a fresh Dream11 test database. From the repo root, run this check to compare the faculty R19 with the R19 section of the [submitted workload](../../sql/06_optimized_queries.sql). It also checks a temporary zero-pick franchise player and a temporary international player, then rolls back the fixture rows.
 
 ```bash
 bash analysis/r19/verify.sh dream11_r19
+```
+
+To repeat the timing trial above against the standalone rewrite, run these commands from the repo root.
+
+```bash
 r19_original=$(mktemp)
 awk '/^-- @R19[[:space:]]*$/ { found=1; print; next } found && /^-- @/ { exit } found { print }' \
   queries/workload_30.sql > "$r19_original"
@@ -31,4 +36,4 @@ bash benchmarks/run_benchmark.sh dream11_r19 r19-after 3 analysis/r19/r19-optimi
 rm "$r19_original"
 ```
 
-Use this R19 section in `sql/06_optimized_queries.sql` when assembling the team workload. Run the full optimized benchmark again after combining the other changes.
+For the integrated CP3 run, see the [team optimization report](../../docs/04_optimization_report.md) and the [exact row comparison](../../benchmarks/results/optimized/equivalence.txt).
